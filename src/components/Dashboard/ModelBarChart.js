@@ -6,7 +6,7 @@ function ModelBarChart({ carStats }) {
 
   const data = Object.entries(brandModelCounts)
     .sort(([, a], [, b]) => Object.values(b).reduce((sum, { count }) => sum + count, 0) - Object.values(a).reduce((sum, { count }) => sum + count, 0))
-    .slice(0, 5) // Top 5 brands
+    // .slice(0, 5) // Top 5 brands
     .map(([brand, models]) => ({
       brand,
       count: Object.values(models).reduce((sum, { count }) => sum + count, 0)

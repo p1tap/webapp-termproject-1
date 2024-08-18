@@ -3,7 +3,9 @@ import {
   Container, 
   Typography, 
   Grid, 
-  Paper, 
+  Paper,
+  CircularProgress,
+  Alert,
 } from '@mui/material';
 import CarTable from '../components/Dashboard/CarTable';
 import BrandPieChart from '../components/Dashboard/BrandPieChart';
@@ -14,13 +16,29 @@ import { processCarData } from '../utils/dataProcessing';
 
 function DashboardPage() {
   const [carStats, setCarStats] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const stats = processCarData(carsData.Cars);
-    setCarStats(stats);
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        const stats = await processCarData(carsData.Cars);
+        setCarStats(stats);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error processing car data:', err);
+        setError('Failed to load car data. Please try again later.');
+        setLoading(false);
+      }
+    };
+
+    loadData();
   }, []);
 
-  if (!carStats) return <Typography>Loading...</Typography>;
+  if (loading) return <CircularProgress />;
+  if (error) return <Alert severity="error">{error}</Alert>;
+  if (!carStats) return <Alert severity="warning">No car data available.</Alert>;
 
   return (
     <Container maxWidth="lg">
@@ -28,15 +46,15 @@ function DashboardPage() {
         Car Market Dashboard
       </Typography>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <Paper elevation={3} sx={{ p: 2, height: 300 }}>
-            <Typography variant="h6" gutterBottom>Top 10 Brand Distribution</Typography>
-            <BrandPieChart carStats={carStats} />
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Paper elevation={3} sx={{ p: 2, height: 300 }}>
-            <Typography variant="h6" gutterBottom>Top 5 Model Distribution</Typography>
+      <Grid item xs={12}>
+        <Paper elevation={3} sx={{ p: 2, height: 550 }}>
+          <Typography variant="h6" gutterBottom>Brand Distribution</Typography>
+          <BrandPieChart carStats={carStats} />
+        </Paper>
+      </Grid>
+        <Grid item xs={12} md={12}>
+          <Paper elevation={3} sx={{ p: 2, height: 500 }}>
+            <Typography variant="h6" gutterBottom>Model Distribution</Typography>
             <ModelBarChart carStats={carStats} />
           </Paper>
         </Grid>
