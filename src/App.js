@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { AppBar, Toolbar, Typography, Button, Container } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,13 +20,13 @@ function App() {
             <Typography variant="h6" style={{ flexGrow: 1 }}>
               Car Market App
             </Typography>
-            <Button color="inherit" href="/">
+            <Button color="inherit" component={Link} to="/">
               Dashboard
             </Button>
-            <Button color="inherit" href="/all-cars">
+            <Button color="inherit" component={Link} to="/all-cars">
               All Cars
             </Button>
-            <Button color="inherit" href="/highlighted">
+            <Button color="inherit" component={Link} to="/highlighted">
               Favorites
             </Button>
           </Toolbar>
