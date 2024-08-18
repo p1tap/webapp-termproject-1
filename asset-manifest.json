@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/webapp-termproject-1/static/css/main.c1028a9c.css",
+    "main.js": "/webapp-termproject-1/static/js/main.6e82c344.js",
+    "index.html": "/webapp-termproject-1/index.html",
+    "main.c1028a9c.css.map": "/webapp-termproject-1/static/css/main.c1028a9c.css.map",
+    "main.6e82c344.js.map": "/webapp-termproject-1/static/js/main.6e82c344.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c1028a9c.css",
+    "static/js/main.6e82c344.js"
+  ]
+}
