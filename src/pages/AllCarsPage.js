@@ -10,7 +10,7 @@ import {
   IconButton
 } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import CustomTooltip from '../components/CustomTooltip';
+import CustomTooltip from '../utils/CustomTooltip';
 import carsData from '../data/cars.json';
 
 function AllCarsPage() {

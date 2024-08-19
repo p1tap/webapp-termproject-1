@@ -10,7 +10,7 @@ import {
   IconButton
 } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import CustomTooltip from '../components/CustomTooltip';
+import CustomTooltip from '../utils/CustomTooltip';
 
 function HighlightedCarsPage() {
   const [highlightedCars, setHighlightedCars] = useState([]);
@@ -29,7 +29,7 @@ function HighlightedCarsPage() {
   return (
     <Container maxWidth="lg">
       <Typography variant="h4" component="h1" gutterBottom>
-        Highlighted Cars
+        Favorites
       </Typography>
       {highlightedCars.length === 0 ? (
         <Typography>No cars have been highlighted yet.</Typography>

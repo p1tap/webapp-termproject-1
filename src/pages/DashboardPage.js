@@ -59,7 +59,7 @@ function DashboardPage() {
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <Paper elevation={3} sx={{ p: 2, height: 300 }}>
+          <Paper elevation={3} sx={{ p: 2, height: 500 }}>
             <Typography variant="h6" gutterBottom>Price Range Distribution</Typography>
             <PriceRangeChart carStats={carStats} />
           </Paper>
