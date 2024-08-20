@@ -2,8 +2,11 @@ import React from 'react';
 import { HashRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { AppBar, Toolbar, Typography, Button, Container } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Container, Tooltip } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import DashboardPage from './pages/DashboardPage';
 import AllCarsPage from './pages/AllCarsPage';
 import HighlightedCarsPage from './pages/HighlightedCarsPage';
@@ -20,15 +23,21 @@ function App() {
             <Typography variant="h6" style={{ flexGrow: 1 }}>
               Car Market App
             </Typography>
-            <Button color="inherit" component={Link} to="/">
-              Dashboard
-            </Button>
-            <Button color="inherit" component={Link} to="/all-cars">
-              All Cars
-            </Button>
-            <Button color="inherit" component={Link} to="/highlighted">
-              Favorites
-            </Button>
+            <Tooltip title="Dashboard">
+              <IconButton color="inherit" component={Link} to="/">
+                <DashboardIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="All Cars">
+              <IconButton color="inherit" component={Link} to="/all-cars">
+                <DirectionsCarIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Favorites">
+              <IconButton color="inherit" component={Link} to="/highlighted">
+                <FavoriteIcon />
+              </IconButton>
+            </Tooltip>
           </Toolbar>
         </AppBar>
         <Container style={{ marginTop: '2rem' }}>
