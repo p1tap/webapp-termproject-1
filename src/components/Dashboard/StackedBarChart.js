@@ -1,9 +1,13 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { useTheme, useMediaQuery } from '@mui/material';
 
 const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 function StackedBarChart({ carStats }) {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   const { brandModelCounts } = carStats;
 
   const processedData = Object.entries(brandModelCounts).map(([brand, models]) => {
@@ -25,8 +29,8 @@ function StackedBarChart({ carStats }) {
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
-        <div style={{ backgroundColor: 'white', padding: '10px', border: '1px solid #ccc' }}>
-          <p><strong>{label}</strong></p>
+        <div style={{ backgroundColor: 'white', padding: '10px', border: '1px solid #ccc', maxWidth: '300px', fontSize: '12px' }}>
+          <p style={{ fontWeight: 'bold', marginBottom: '5px' }}>{label}</p>
           {payload.map((entry, index) => (
             entry.value > 0 && (
               <p key={index} style={{ color: entry.color, margin: '2px 0' }}>
@@ -34,7 +38,7 @@ function StackedBarChart({ carStats }) {
               </p>
             )
           ))}
-          <p><strong>Total: {payload.reduce((sum, entry) => sum + entry.value, 0)}</strong></p>
+          <p style={{ fontWeight: 'bold', marginTop: '5px' }}>Total: {payload.reduce((sum, entry) => sum + entry.value, 0)}</p>
         </div>
       );
     }
@@ -46,13 +50,24 @@ function StackedBarChart({ carStats }) {
       <BarChart 
         data={processedData} 
         layout="vertical"
-        margin={{ top: 20, right: 30, left: 100, bottom: 5 }}
+        margin={{ top: 20, right: 15, left: isSmallScreen ? 20 : 0, bottom: 0 }}
       >
         <XAxis type="number" />
-        <YAxis type="category" dataKey="brand" width={90} />
+        <YAxis 
+          type="category" 
+          dataKey="brand" 
+          width={isSmallScreen ? 70 : 110}
+          tick={{ fontSize: isSmallScreen ? 10 : 12 }}
+        />
         <Tooltip content={<CustomTooltip />} />
         {allModels.map((model, index) => (
-          <Bar key={model} dataKey={model} stackId="a" fill={COLORS[index % COLORS.length]} />
+          <Bar 
+            key={model} 
+            dataKey={model} 
+            stackId="a" 
+            fill={COLORS[index % COLORS.length]}
+            maxBarSize={isSmallScreen ? 15 : 30}
+          />
         ))}
       </BarChart>
     </ResponsiveContainer>

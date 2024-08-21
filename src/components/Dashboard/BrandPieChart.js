@@ -56,7 +56,7 @@ function BrandPieChart({ carStats }) {
           cx="50%"
           cy="50%"
           labelLine={false}
-          outerRadius={isSmallScreen ? "70%" : "60%"}
+          outerRadius={isSmallScreen ? "80%" : "90%"}
           fill="#8884d8"
           dataKey="value"
           label={renderCustomizedLabel}
@@ -72,14 +72,15 @@ function BrandPieChart({ carStats }) {
           }}
         />
         <Legend 
-          layout={isSmallScreen ? "horizontal" : "vertical"}
-          align={isSmallScreen ? "center" : "right"}
-          verticalAlign={isSmallScreen ? "bottom" : "middle"}
+          layout="horizontal"
+          align="center"
+          verticalAlign="bottom"
           wrapperStyle={{
             fontSize: '12px',
-            maxHeight: '80%',
-            overflowY: 'auto',
-            paddingBottom: isSmallScreen ? '20px' : '0'
+            paddingTop: isSmallScreen ? '10px' : '20px',
+            paddingBottom: isSmallScreen ? '15px' : '0',
+            overflowX: 'auto',  // Allow horizontal scrolling if needed
+            // whiteSpace: 'nowrap'  // Prevent line breaks in legend items
           }}
         />
       </PieChart>
