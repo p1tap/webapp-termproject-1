@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { useTheme, useMediaQuery } from '@mui/material';
 
 const COLORS = [
   '#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D', '#A4DE6C',
@@ -8,28 +9,30 @@ const COLORS = [
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index, name }) => {
-  const radiusOffset = 30;
-  const radius = outerRadius + radiusOffset;
+  const radius = outerRadius * 0.7;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
-  if (percent < 0.01) return null; // Don't show labels for slices smaller than 1%
+  if (percent < 0.02) return null; // Don't show labels for slices smaller than 5%
 
   return (
     <text 
       x={x} 
       y={y} 
-      fill="black" 
+      fill="white" 
       textAnchor={x > cx ? 'start' : 'end'} 
       dominantBaseline="central"
-      style={{ fontSize: '12px', fontWeight: 'bold', opacity: 0.75 }}
+      style={{ fontSize: '12px', fontWeight: 'bold' }}
     >
-      {`${name} (${(percent * 100).toFixed(1)}%)`}
+      {`${(percent * 100).toFixed(0)}%`}
     </text>
   );
 };
 
 function BrandPieChart({ carStats }) {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   const data = useMemo(() => {
     const { brandCounts } = carStats;
     const total = Object.values(brandCounts).reduce((sum, { count }) => sum + count, 0);
@@ -46,14 +49,14 @@ function BrandPieChart({ carStats }) {
   const totalValue = useMemo(() => data.reduce((sum, entry) => sum + entry.value, 0), [data]);
 
   return (
-    <ResponsiveContainer width="100%" height={500}>
+    <ResponsiveContainer width="100%" height="100%">
       <PieChart>
         <Pie
           data={data}
           cx="50%"
           cy="50%"
           labelLine={false}
-          outerRadius={180}
+          outerRadius={isSmallScreen ? "70%" : "60%"}
           fill="#8884d8"
           dataKey="value"
           label={renderCustomizedLabel}
@@ -69,12 +72,14 @@ function BrandPieChart({ carStats }) {
           }}
         />
         <Legend 
-          layout="vertical" 
-          align="right" 
-          verticalAlign="middle"
-          formatter={(value, entry) => {
-            const { name, percent } = entry.payload;
-            return `${name} (${(percent * 100).toFixed(1)}%)`;
+          layout={isSmallScreen ? "horizontal" : "vertical"}
+          align={isSmallScreen ? "center" : "right"}
+          verticalAlign={isSmallScreen ? "bottom" : "middle"}
+          wrapperStyle={{
+            fontSize: '12px',
+            maxHeight: '80%',
+            overflowY: 'auto',
+            paddingBottom: isSmallScreen ? '20px' : '0'
           }}
         />
       </PieChart>
